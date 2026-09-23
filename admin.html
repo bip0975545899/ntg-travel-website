@@ -1,14 +1,98 @@
-<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NTG Admin Panel</title><link rel="stylesheet" href="styles.css"><style>.admin{padding:45px 0}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:var(--shadow);margin-bottom:20px}.admin-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.admin-tabs button{border:0;padding:10px 15px;border-radius:10px;font-weight:800;cursor:pointer}.tab{display:none}.tab.active{display:block}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}th{background:#f4f8fd}.danger{background:#fee2e2;color:#991b1b}.success-btn{background:#dcfce7;color:#166534}.login{min-height:100vh;display:grid;place-items:center}.login .panel{width:min(420px,92%)}.status{padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#eef4fb}.stats-admin{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.stat-admin{background:#f6faff;border:1px solid var(--line);padding:18px;border-radius:15px}.stat-admin strong{display:block;font-size:28px}@media(max-width:700px){.stats-admin{grid-template-columns:1fr}}</style></head><body>
+<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NTG Admin Panel</title><link rel="stylesheet" href="styles.css"><style>.edit-card{border:1px solid var(--line);border-radius:15px;padding:16px;margin:12px 0;background:#fbfdff}.edit-card .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.edit-card input,.edit-card textarea{width:100%;padding:10px;border:1px solid #d8e3ef;border-radius:9px;font:inherit}.edit-card textarea{min-height:80px}.edit-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}@media(max-width:600px){.edit-card .row{grid-template-columns:1fr}}.admin{padding:45px 0}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:var(--shadow);margin-bottom:20px}.admin-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.admin-tabs button{border:0;padding:10px 15px;border-radius:10px;font-weight:800;cursor:pointer}.tab{display:none}.tab.active{display:block}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}th{background:#f4f8fd}.danger{background:#fee2e2;color:#991b1b}.success-btn{background:#dcfce7;color:#166534}.login{min-height:100vh;display:grid;place-items:center}.login .panel{width:min(420px,92%)}.status{padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#eef4fb}.stats-admin{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.stat-admin{background:#f6faff;border:1px solid var(--line);padding:18px;border-radius:15px}.stat-admin strong{display:block;font-size:28px}@media(max-width:700px){.stats-admin{grid-template-columns:1fr}}</style></head><body>
 <div id="login" class="login"><div class="panel"><div class="brand"><span class="brandmark">NTG</span><span>Admin Panel<small>Travel Management</small></span></div><h2>Admin Login</h2><p class="muted">Production password দিয়ে লগইন করুন।</p><input id="password" class="field" style="width:100%;padding:12px;border:1px solid #d8e3ef;border-radius:11px" type="password" placeholder="Admin password"><button id="loginBtn" class="btn btn-primary" style="width:100%;margin-top:12px">Login</button><p id="loginMsg" class="muted"></p></div></div>
-<div id="dashboard" style="display:none"><header><div class="container nav"><a class="brand" href="index.html"><span class="brandmark">NTG</span><span>NTG Admin<small>Dashboard</small></span></a><div><a class="btn btn-secondary" href="index.html">Website</a> <button class="btn danger" id="logout">Logout</button></div></div></header><main class="admin"><div class="container"><div class="stats-admin"><div class="stat-admin">📦<strong id="tourCount">0</strong>ট্যুর</div><div class="stat-admin">📋<strong id="bookingCount">0</strong>বুকিং</div><div class="stat-admin">🆕<strong id="newCount">0</strong>নতুন বুকিং</div></div><div class="admin-tabs"><button data-tab="bookings">Bookings</button><button data-tab="tours">Tours</button></div><section id="bookings" class="tab active"><div class="panel"><h2>Booking Requests</h2><div class="table-wrap"><table><thead><tr><th>ID</th><th>Tour</th><th>নাম</th><th>মোবাইল</th><th>তারিখ</th><th>যাত্রী</th><th>Status</th><th>Action</th></tr></thead><tbody id="bookingTable"></tbody></table></div></div></section><section id="tours" class="tab"><div class="panel"><h2>নতুন Tour যোগ করুন</h2><form id="tourForm"><div class="form-grid"><div class="field"><label>Tour Name *</label><input name="title" required></div><div class="field"><label>Date</label><input name="date"></div><div class="field"><label>Duration</label><input name="duration"></div><div class="field"><label>Price (BDT)</label><input name="price" type="number"></div><div class="field"><label>Category</label><input name="category" value="গ্রুপ"></div><div class="field"><label>Image path</label><input name="image" value="group-1.jpeg"></div><div class="field full"><label>Description</label><textarea name="desc"></textarea></div></div><button class="btn btn-primary">Tour যোগ করুন</button></form></div><div class="panel"><h2>Existing Tours</h2><div id="tourAdminList"></div></div></section></div></main></div>
+<div id="dashboard" style="display:none"><header><div class="container nav"><a class="brand" href="index.html"><span class="brandmark">NTG</span><span>NTG Admin<small>Dashboard</small></span></a><div><a class="btn btn-secondary" href="index.html">Website</a> <button class="btn danger" id="logout">Logout</button></div></div></header><main class="admin"><div class="container"><div class="stats-admin"><div class="stat-admin">📦<strong id="tourCount">0</strong>ট্যুর</div><div class="stat-admin">📋<strong id="bookingCount">0</strong>বুকিং</div><div class="stat-admin">🆕<strong id="newCount">0</strong>নতুন বুকিং</div></div><div class="admin-tabs"><button data-tab="bookings">Bookings</button><button data-tab="tours">Tours</button></div><section id="bookings" class="tab active"><div class="panel"><h2>Booking Requests</h2><div class="table-wrap"><table><thead><tr><th>ID</th><th>Tour</th><th>নাম</th><th>মোবাইল</th><th>তারিখ</th><th>যাত্রী</th><th>Status</th><th>Action</th></tr></thead><tbody id="bookingTable"></tbody></table></div></div></section><section id="tours" class="tab"><div class="panel"><h2>নতুন Tour যোগ করুন</h2><form id="tourForm"><div class="form-grid"><div class="field"><label>Tour Name *</label><input name="title" required></div><div class="field"><label>Date</label><input name="date"></div><div class="field"><label>Duration</label><input name="duration"></div><div class="field"><label>Price (BDT)</label><input name="price" type="number"></div><div class="field"><label>Category</label><input name="category" value="গ্রুপ"></div><div class="field"><label>Image path</label><input name="image" value="group-1.jpeg"></div><div class="field full"><label>Description</label><textarea name="desc"></textarea></div></div><button class="btn btn-primary">Tour যোগ করুন</button></form></div><div class="panel"><h2>Existing Tours</h2><p class="muted">এখান থেকে প্যাকেজের নাম, তারিখ, সময়, দাম, ছবি ও বর্ণনা পরিবর্তন করতে পারবেন।</p><div id="tourAdminList"></div></div></section></div></main></div>
 <script>
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function api(url,opt={}){const r=await fetch(url,{headers:{'Content-Type':'application/json',...(opt.headers||{})},...opt});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||'Request failed');return d}
 const login=document.querySelector('#login'),dash=document.querySelector('#dashboard');
-async function refresh(){try{const d=await api('/api/admin/data');const t=d.tours,b=d.bookings;document.querySelector('#tourCount').textContent=t.length;document.querySelector('#bookingCount').textContent=b.length;document.querySelector('#newCount').textContent=b.filter(x=>x.status==='নতুন').length;document.querySelector('#bookingTable').innerHTML=b.length?b.map(x=>`<tr><td>${esc(x.id)}</td><td>${esc(x.tour)}</td><td>${esc(x.name)}</td><td>${esc(x.phone)}</td><td>${esc(x.date)}</td><td>${esc(x.travellers)}</td><td><span class="status">${esc(x.status)}</span></td><td><button class="btn success-btn" onclick="done('${esc(x.id)}')">Done</button> <button class="btn danger" onclick="delBooking('${esc(x.id)}')">Delete</button></td></tr>`).join(''):'<tr><td colspan="8">এখনও কোনো booking নেই।</td></tr>';document.querySelector('#tourAdminList').innerHTML=t.map(x=>`<div class="panel" style="margin:10px 0"><b>${esc(x.title)}</b> · ${x.price?`৳${Number(x.price).toLocaleString('bn-BD')}`:'কাস্টম'}<button class="btn danger" style="float:right" onclick="delTour('${esc(x.id)}')">Delete</button></div>`).join('')}catch(e){if(e.message==='Unauthorized'){login.style.display='grid';dash.style.display='none'}}}
-window.done=async id=>{await api('/api/admin/bookings/'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify({status:'সম্পন্ন'})});refresh()};window.delBooking=async id=>{if(confirm('এই booking মুছবেন?')){await api('/api/admin/bookings/'+encodeURIComponent(id),{method:'DELETE'});refresh()}};window.delTour=async id=>{if(confirm('এই tour মুছবেন?')){await api('/api/admin/tours/'+encodeURIComponent(id),{method:'DELETE'});refresh()}};
-document.querySelector('#loginBtn').onclick=async()=>{try{await api('/api/admin/login',{method:'POST',body:JSON.stringify({password:document.querySelector('#password').value})});login.style.display='none';dash.style.display='block';refresh()}catch(e){document.querySelector('#loginMsg').textContent=e.message}};
+let TOURS=[];
+
+function renderTours(t){
+  TOURS=t||[];
+  document.querySelector('#tourAdminList').innerHTML=TOURS.length?TOURS.map(x=>`
+    <div class="edit-card">
+      <div class="row">
+        <div><label>প্যাকেজের নাম</label><input id="title-${esc(x.id)}" value="${esc(x.title)}"></div>
+        <div><label>তারিখ</label><input id="date-${esc(x.id)}" value="${esc(x.date)}"></div>
+        <div><label>সময়/Duration</label><input id="duration-${esc(x.id)}" value="${esc(x.duration)}"></div>
+        <div><label>দাম (টাকা)</label><input id="price-${esc(x.id)}" type="number" value="${Number(x.price)||0}"></div>
+        <div><label>Category</label><input id="category-${esc(x.id)}" value="${esc(x.category)}"></div>
+        <div><label>ছবির ফাইল</label><input id="image-${esc(x.id)}" value="${esc(x.image)}"></div>
+        <div style="grid-column:1/-1"><label>বর্ণনা</label><textarea id="desc-${esc(x.id)}">${esc(x.desc)}</textarea></div>
+      </div>
+      <div class="edit-actions">
+        <button class="btn btn-primary" onclick="saveTour('${esc(x.id)}')">💾 পরিবর্তন সংরক্ষণ</button>
+        <button class="btn danger" onclick="delTour('${esc(x.id)}')">🗑️ Delete</button>
+      </div>
+    </div>`).join(''):'<p>এখনও কোনো tour নেই।'};
+}
+
+async function refresh(){
+ try{
+  const d=await api('/api/admin/data'); const t=d.tours||[], b=d.bookings||[];
+  document.querySelector('#tourCount').textContent=t.length;
+  document.querySelector('#bookingCount').textContent=b.length;
+  document.querySelector('#newCount').textContent=b.filter(x=>x.status==='নতুন').length;
+  document.querySelector('#bookingTable').innerHTML=b.length?b.map(x=>`
+    <tr><td>${esc(x.id)}</td><td>${esc(x.tour)}</td><td>${esc(x.name)}</td><td>${esc(x.phone)}</td>
+    <td>${esc(x.date)}</td><td>${esc(x.travellers)}</td><td><span class="status">${esc(x.status)}</span></td>
+    <td><select onchange="setStatus('${esc(x.id)}',this.value)">
+      ${['নতুন','যোগাযোগ হয়েছে','নিশ্চিত','সম্পন্ন','বাতিল'].map(s=>`<option ${x.status===s?'selected':''}>${s}</option>`).join('')}
+    </select> <button class="btn danger" onclick="delBooking('${esc(x.id)}')">Delete</button></td></tr>`).join('')
+    :'<tr><td colspan="8">এখনও কোনো booking নেই।</td></tr>';
+  renderTours(t);
+ }catch(e){if(e.message==='Unauthorized'){login.style.display='grid';dash.style.display='none'}}
+}
+
+window.saveTour=async id=>{
+ try{
+  const payload={
+   title:document.querySelector('#title-'+CSS.escape(id)).value.trim(),
+   date:document.querySelector('#date-'+CSS.escape(id)).value.trim(),
+   duration:document.querySelector('#duration-'+CSS.escape(id)).value.trim(),
+   price:Number(document.querySelector('#price-'+CSS.escape(id)).value)||0,
+   category:document.querySelector('#category-'+CSS.escape(id)).value.trim(),
+   image:document.querySelector('#image-'+CSS.escape(id)).value.trim(),
+   desc:document.querySelector('#desc-'+CSS.escape(id)).value.trim()
+  };
+  await api('/api/admin/tours/'+encodeURIComponent(id),{method:'PUT',body:JSON.stringify(payload)});
+  await refresh(); alert('প্যাকেজ পরিবর্তন সংরক্ষণ হয়েছে।');
+ }catch(e){alert(e.message)}
+};
+
+window.setStatus=async(id,status)=>{
+ try{await api('/api/admin/bookings/'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify({status})});await refresh()}
+ catch(e){alert(e.message)}
+};
+
+window.delBooking=async id=>{
+ if(confirm('এই booking মুছবেন?')){await api('/api/admin/bookings/'+encodeURIComponent(id),{method:'DELETE'});refresh()}
+};
+window.delTour=async id=>{
+ if(confirm('এই tour মুছবেন?')){await api('/api/admin/tours/'+encodeURIComponent(id),{method:'DELETE'});refresh()}
+};
+
+document.querySelector('#loginBtn').onclick=async()=>{
+ try{
+  await api('/api/admin/login',{method:'POST',body:JSON.stringify({password:document.querySelector('#password').value})});
+  login.style.display='none';dash.style.display='block';refresh()
+ }catch(e){document.querySelector('#loginMsg').textContent=e.message}
+};
+document.querySelector('#password').addEventListener('keydown',e=>{if(e.key==='Enter')document.querySelector('#loginBtn').click()});
 document.querySelector('#logout').onclick=async()=>{await api('/api/admin/logout',{method:'POST'});dash.style.display='none';login.style.display='grid'};
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelector('#'+b.dataset.tab).classList.add('active')});
-document.querySelector('#tourForm').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target);try{await api('/api/admin/tours',{method:'POST',body:JSON.stringify({title:fd.get('title'),date:fd.get('date'),duration:fd.get('duration'),price:Number(fd.get('price'))||0,image:fd.get('image'),category:fd.get('category'),desc:fd.get('desc'),details:[]})});e.target.reset();refresh();alert('Tour যোগ হয়েছে।')}catch(err){alert(err.message)}};
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ document.querySelector('#'+b.dataset.tab).classList.add('active');
+});
+document.querySelector('#tourForm').onsubmit=async e=>{
+ e.preventDefault();const fd=new FormData(e.target);
+ try{
+  await api('/api/admin/tours',{method:'POST',body:JSON.stringify({
+   title:fd.get('title'),date:fd.get('date'),duration:fd.get('duration'),
+   price:Number(fd.get('price'))||0,image:fd.get('image'),category:fd.get('category'),
+   desc:fd.get('desc'),details:[]
+  })});
+  e.target.reset();await refresh();alert('Tour যোগ হয়েছে।');
+ }catch(err){alert(err.message)}
+};
 </script></body></html>
