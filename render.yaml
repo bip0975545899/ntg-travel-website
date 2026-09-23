@@ -9,3 +9,8 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
+      - key: DATABASE_URL
+        sync: false
+
+# If you use Render PostgreSQL, create a PostgreSQL database in the Render dashboard
+# and copy its Internal Database URL into DATABASE_URL.
