@@ -16,4 +16,4 @@
 - Admin: `/admin.html`
 
 ## Important data note
-The current starter stores tours and bookings in `data/db.json`. On hosts with ephemeral disks, data can be lost after redeploy/restart. For a permanent production database, migrate this store to PostgreSQL/Supabase or another managed database.
+The current starter stores tours and bookings in `(server creates the database automatically)`. On hosts with ephemeral disks, data can be lost after redeploy/restart. For a permanent production database, migrate this store to PostgreSQL/Supabase or another managed database.

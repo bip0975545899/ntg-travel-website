@@ -16,7 +16,7 @@ Start command: npm start
 Set environment variable ADMIN_PASSWORD to a strong secret.
 
 DATA
-Bookings and tours are stored in data/db.json. For a multi-instance production deployment, replace this JSON store with PostgreSQL/Supabase or another managed database. Keep backups and use persistent storage on hosts with ephemeral filesystems.
+Bookings and tours are stored in (server creates the database automatically). For a multi-instance production deployment, replace this JSON store with PostgreSQL/Supabase or another managed database. Keep backups and use persistent storage on hosts with ephemeral filesystems.
 
 SECURITY
 - Admin password is server-side and never shipped to the browser.
