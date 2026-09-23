@@ -1,0 +1,1 @@
+{"name":"ntg-travel-website","version":"2.0.0","private":true,"description":"NTG Travel Agency website with secure admin API and booking management","scripts":{"start":"node server.js"},"engines":{"node":">=18"}}
