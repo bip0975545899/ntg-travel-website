@@ -1,26 +1,25 @@
-# NTG Admin Panel – Setup
+# NTG Admin Panel Setup
 
-## Admin URL
-`https://YOUR-DOMAIN.onrender.com/admin.html`
+## 1) Set the password on Render
+Open your Render service -> Environment.
+Add:
+- Key: ADMIN_PASSWORD
+- Value: your strong password
+Then save and redeploy.
 
-## 1. Render Environment Variables
-In Render → your Web Service → Environment add:
+## 2) Open the admin panel
+https://YOUR-DOMAIN.onrender.com/admin.html
 
-- `ADMIN_PASSWORD` = a strong private password
-- `NODE_ENV` = `production`
-- `DATABASE_URL` = your PostgreSQL Internal Database URL (recommended)
+Log in with the same ADMIN_PASSWORD.
 
-If `DATABASE_URL` is not set, the app falls back to `data/db.json`. On Render, the local filesystem is not a permanent database, so PostgreSQL is strongly recommended.
+## 3) Change a package
+Admin -> Tours -> edit the package -> change name/date/duration/price/image/description -> "পরিবর্তন সংরক্ষণ".
 
-## 2. Features
-- Admin login/logout
-- Add, edit and delete tour packages
-- Booking list, status update and delete
-- Total visits
-- Unique visitors (cookie-based)
-- Today's visits
-- 7-day visits
-- PostgreSQL persistence when `DATABASE_URL` is configured
+## 4) Add a package
+Admin -> Tours -> "নতুন Tour যোগ করুন" -> fill the fields -> "Tour যোগ করুন".
 
-## 3. Deploy
-Push all changed files to GitHub and redeploy the Render service.
+## 5) Manage bookings
+Admin -> Bookings -> change status or delete a booking.
+
+IMPORTANT
+The current server stores tours/bookings in data/db.json. Render Free web services use ephemeral local storage, so data can be lost after certain restarts/redeploys. For permanent production data, use PostgreSQL/Supabase or a persistent disk.
